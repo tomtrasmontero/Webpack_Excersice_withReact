@@ -7,12 +7,12 @@ const injectConfig = new HtmlWebpackPlugin({
 });
 
 module.exports = {
-  context: `${__dirname}/app`,
+  context: __dirname + '/app',
   // bundling all file associated in ./index.js
   entry: './index.js',
   // where the bundle files will be located
   output: {
-    path: `${__dirname}/build`,
+    path: __dirname + '/build',
     filename: 'bundle.js'
   },
   module: {
@@ -21,6 +21,10 @@ module.exports = {
      loaders: [
        { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
        { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
+      //  sass-loader compiles SCSS, css-loader allows us to require the SCSS
+      //  and style-loader injects it to our page.
+       { test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader'],
+        exclude: /node_modules/ }
      ]
   },
   plugins: [injectConfig]
